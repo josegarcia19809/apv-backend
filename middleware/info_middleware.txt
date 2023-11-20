@@ -1,0 +1,3 @@
+En el video Comprobando el token en el middleware (497)
+se describe cómo crear una variable en un entorno de desarrollo privado
+en Postman
