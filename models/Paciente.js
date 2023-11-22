@@ -13,6 +13,14 @@ const pacientesSchema = mongoose.Schema({
             type: String,
             required: true,
         },
+        fecha: {
+            type: Date,
+            required: true,
+        },
+        sintomas: {
+            type: String,
+            required: true,
+        },
         veterinario: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Veterinario",
