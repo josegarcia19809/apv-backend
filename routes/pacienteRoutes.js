@@ -7,8 +7,9 @@ import checkAuth from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route("/")
+router
+    .route("/")
     .post(checkAuth, agregarPaciente)
-    .get(obtenerPacientes)
+    .get(checkAuth, obtenerPacientes)
 
 export default router;
