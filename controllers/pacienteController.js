@@ -42,20 +42,35 @@ const actualizarPaciente = async (req, res) => {
         return res.json({msg: "Acción no válida"})
     }
     // Actualizar paciente
-    paciente.nombre= req.body.nombre || paciente.nombre;
-    paciente.propietario= req.body.propietario || paciente.propietario;
-    paciente.email= req.body.email || paciente.email;
-    paciente.fecha= req.body.fecha || paciente.fecha;
-    paciente.sintomas= req.body.sintomas || paciente.sintomas;
-    try{
-        const pacienteActualizado= await paciente.save();
+    paciente.nombre = req.body.nombre || paciente.nombre;
+    paciente.propietario = req.body.propietario || paciente.propietario;
+    paciente.email = req.body.email || paciente.email;
+    paciente.fecha = req.body.fecha || paciente.fecha;
+    paciente.sintomas = req.body.sintomas || paciente.sintomas;
+    try {
+        const pacienteActualizado = await paciente.save();
         res.json(pacienteActualizado)
-    }catch (e) {
+    } catch (e) {
         console.log(e)
     }
 
 }
 const eliminarPaciente = async (req, res) => {
+    const {id} = req.params;
+    const paciente = await Paciente.findById(id);
+
+    if (!paciente) {
+        res.status(404).json({json: "Acción no válida"})
+    }
+    if (paciente.veterinario._id.toString() !== req.veterinario._id.toString()) {
+        return res.json({msg: "Acción no válida"})
+    }
+    try {
+        await paciente.deleteOne();
+        res.json({msg: "Paciente borrado"})
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export {
