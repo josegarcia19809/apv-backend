@@ -87,13 +87,6 @@ const olvidePassword = async (req, res) => {
 
     const existeVeterinario = await Veterinario.findOne({email});
 
-    // Enviar email con instrucciones
-    emailOlvidePassword({
-        email,
-        nombre: existeVeterinario.nombre,
-        token: existeVeterinario.token
-    })
-
     if (!existeVeterinario) {
         const error = new Error("El usuario no existe");
         return res.status(400).json({msg: error.message});
@@ -101,6 +94,12 @@ const olvidePassword = async (req, res) => {
     try {
         existeVeterinario.token = generarId();
         await existeVeterinario.save();
+        // Enviar email con instrucciones
+        await emailOlvidePassword({
+            email,
+            nombre: existeVeterinario.nombre,
+            token: existeVeterinario.token
+        });
         res.json({msg: "Hemos enviado un email con las instrucciones"});
     } catch (e) {
         console.log(e);
