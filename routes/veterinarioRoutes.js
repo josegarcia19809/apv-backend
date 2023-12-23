@@ -2,7 +2,7 @@ import express from "express";
 import {
     registrar, perfil,
     confirmar, autenticar, olvidePassword, comprobarToken,
-    nuevoPassword
+    nuevoPassword, actualizarPerfil
 } from "../controllers/veterinarioControllers.js"
 import checkAuth from "../middleware/authMiddleware.js";
 
@@ -20,5 +20,6 @@ router.route("/olvide-password/:token").get(comprobarToken).post(nuevoPassword);
 
 // Rutas protegidas
 router.get("/perfil", checkAuth, perfil);
+router.put('/perfil/:id', checkAuth, actualizarPerfil);
 
 export default router;
